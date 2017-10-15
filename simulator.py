@@ -42,7 +42,7 @@ while True:
         print ("sell")
         walletBitcoin = walletBitcoin - 1
         walletDollar = walletDollar + currentPrice - getTransectionfee()
-    elif currentPrice < oldPrice:
+    elif currentPrice < oldPrice and walletDollar >0:
         print ("buy")
         walletBitcoin = walletBitcoin + 1
         walletDollar = walletDollar - currentPrice - getTransectionfee()
