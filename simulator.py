@@ -3,17 +3,11 @@ import json
 import urllib.request
 import time
 
-
-# function buy sell
-# function get price 
-# variable wallet
-# variable old price
-
 walletBitcoin = 100.0
 walletDollar = 100000.0
 firstrun = True
 currentPrice = 0
-print ('start')
+print ('Starting simulator...')
 def getMidPrice():
     with urllib.request.urlopen('https://api.bitfinex.com/v1/pubticker/btcusd') as response:
         html = response.read()
@@ -45,9 +39,3 @@ while True:
     oldPrice = currentPrice
  
     time.sleep(3)
-    
-     
-
-
-#test = json.loads(html)
-#print (test['mid'], old_price)
