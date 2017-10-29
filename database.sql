@@ -11,7 +11,7 @@ CREATE TABLE bitcoin.bitfinex
     low double precision,
     high double precision,
     volume double precision,
-    "timestamp" "char"
+    timestamp character varying
 )
 WITH (
     OIDS = FALSE

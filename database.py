@@ -11,7 +11,7 @@ class Database:
         try:
             connection_string = "dbname='cryptocurrencies' "
             connection_string += "user='" + self.config['database']['username'] + "' "
-            connection_string += "host='localhost' "
+            connection_string += "host='" + self.config['database']['host'] + "' "
             connection_string += "password='" + self.config['database']['password'] + "'"
 
             self.connection = psycopg2.connect(connection_string)
