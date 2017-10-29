@@ -24,3 +24,10 @@ class Database:
         self.cursor.execute("""INSERT INTO bitcoin.bitfinex VALUES(%s, %s, %s, %s, %s, %s, %s, %s);""",
                             [mid, bid, ask, last, low, high, volume, timestamp])
 
+    def getSampleData(self):
+        self.cursor.execute("""SELECT last_price, timestamp FROM bitcoin.bitfinex""")
+        results = []
+        for record in self.cursor:
+            results.append([record[0], record[1]])
+        return results
+
