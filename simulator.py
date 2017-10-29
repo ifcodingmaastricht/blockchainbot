@@ -3,6 +3,10 @@ import json
 import urllib.request
 import time
 from wallet import Wallet
+from database import Database
+
+db = Database()
+db.connect()
 
 walletBitcoin = 0.0
 cash_wallet = Wallet()
@@ -10,6 +14,7 @@ firstrun = True
 transection = 0.002
 
 print ('Starting simulator...')
+
 def getMidPrice():
     with urllib.request.urlopen('https://api.bitfinex.com/v1/pubticker/btcusd') as response:
         html = response.read()
@@ -23,7 +28,6 @@ def getSellPrice():
 
 oldPrice = currentPrice = initPrice = getSellPrice()
 
-
 def getTransectionfee():
     return transection * currentPrice
 
@@ -36,7 +40,16 @@ def showTotalNetWorth():
 
 totalNetWorthStart = getTotalNetWorth()
 
+
+
 while True:
+    var = urllib.request.urlopen('https://api.bitfinex.com/v1/pubticker/btcusd') 
+    html = var.read()
+    bitfinexBtcusd = (json.loads(html))
+    
+    db.store(bitfinexBtcusd ['mid'], bitfinexBtcusd ['bid'],bitfinexBtcusd ['ask'], bitfinexBtcusd ['last_price'],
+        bitfinexBtcusd ['low'], bitfinexBtcusd ['high'], bitfinexBtcusd ['volume'], bitfinexBtcusd ['timestamp'])
+
     currentPrice = getSellPrice()
     print ('old;',oldPrice,'currentPrice;',currentPrice)
     if currentPrice > oldPrice and walletBitcoin > 0:
@@ -53,4 +66,4 @@ while True:
     
     oldPrice = currentPrice
  
-    time.sleep(3)
+    time.sleep(300)
