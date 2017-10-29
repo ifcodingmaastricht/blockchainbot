@@ -2,9 +2,10 @@
 import json
 import urllib.request
 import time
+from wallet import Wallet
 
 walletBitcoin = 0.0
-walletDollar = 100000.0
+cash_wallet = Wallet()
 firstrun = True
 transection = 0.002
 
@@ -19,18 +20,18 @@ def getSellPrice():
         html = response.read()
     return float(json.loads(html)['last_price'])
 
+
 oldPrice = currentPrice = initPrice = getSellPrice()
 
 
 def getTransectionfee():
     return transection * currentPrice
 
-
 def getTotalNetWorth():
-    return walletDollar + (walletBitcoin * currentPrice)
+    return cash_wallet.cash + (walletBitcoin * currentPrice)
 
 def showTotalNetWorth():
-    print ('Total bitcoin:', walletBitcoin, 'walletDollar', walletDollar)
+    print ('Total bitcoin:', walletBitcoin, 'walletDollar', cash_wallet.cash)
     print ('Total networth:', getTotalNetWorth(), 'profit', getTotalNetWorth() - totalNetWorthStart )
 
 totalNetWorthStart = getTotalNetWorth()
@@ -41,11 +42,13 @@ while True:
     if currentPrice > oldPrice and walletBitcoin > 0:
         print ("sell")
         walletBitcoin = walletBitcoin - 1
-        walletDollar = walletDollar + currentPrice - getTransectionfee()
-    elif currentPrice < oldPrice and walletDollar >0:
+        cash_wallet.collect(currentPrice)
+        cash_wallet.give(getTransectionfee())
+    elif currentPrice < oldPrice and cash_wallet.cash > 0:
         print ("buy")
         walletBitcoin = walletBitcoin + 1
-        walletDollar = walletDollar - currentPrice - getTransectionfee()
+        cash_wallet.give(currentPrice)
+        cash_wallet.give(getTransectionfee())
     showTotalNetWorth()
     
     oldPrice = currentPrice
