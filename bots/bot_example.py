@@ -1,15 +1,16 @@
 import time
-from exchange.fake import Exchange
+import bots.exchange.ifcoding
 
 print('Starting bot example...')
-exchange = Exchange()
+exchange = bots.exchange.ifcoding.Exchange()
 old_price = exchange.get_last_sell_price()
-net_worth_start = exchange.get_balance()
+net_worth_start = 100000
 
 
 def show_total_net_worth():
-    print('#bitcoins: ', exchange.bit_coin, 'cash: ', exchange.cash)
-    print('Profit: ', exchange.get_balance() - net_worth_start)
+    balance = exchange.get_balance()
+    print('#bitcoins: ', balance['bitcoin'], 'cash: ', balance['cash'])
+    print('Profit: ', balance['total'] - net_worth_start)
 
 
 while True:
