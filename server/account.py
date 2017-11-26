@@ -40,6 +40,6 @@ class Account:
             cursor.execute("UPDATE accounts SET balance_bitcoins = %s, balance_fiat = %s, password = %s WHERE id = %s", [self.balanceBitcoins, self.balanceFiat, self.password, self.accountId])
 
     def __copyRowToVariables(self, row):
-        self.balanceBitcoins = row[self.COL_BALANCE_BITCOINS]
-        self.balanceFiat = row[self.COL_BALANCE_FIAT]
+        self.balanceBitcoins = float(row[self.COL_BALANCE_BITCOINS])
+        self.balanceFiat = float(row[self.COL_BALANCE_FIAT])
         self.password = row[self.COL_PASSWORD]
