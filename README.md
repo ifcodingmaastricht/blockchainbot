@@ -19,7 +19,12 @@ pip install psycopg2
 * brew install postgres
 * pg_ctl -D /usr/local/var/postgres start
 
+# Installing all requirements:
+
+* `pip3 install -r requirements.txt`
+
 # Running things
 
 * simulator: `python3 -m simulator.py`
 * server: `python3 -m server.server`
+* test accounts: `python3 -m test.account`
