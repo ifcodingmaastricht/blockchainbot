@@ -9,7 +9,7 @@ class Database:
 
     def connect(self):
         try:
-            connection_string = "dbname='cryptocurrencies' "
+            connection_string = "dbname='" + self.config['database']['database'] + "' "
             connection_string += "user='" + self.config['database']['username'] + "' "
             connection_string += "host='" + self.config['database']['host'] + "' "
             connection_string += "password='" + self.config['database']['password'] + "'"
@@ -21,13 +21,12 @@ class Database:
             print(e)
 
     def store(self, mid, bid, ask, last, low, high, volume, timestamp):
-        self.cursor.execute("""INSERT INTO bitcoin.bitfinex VALUES(%s, %s, %s, %s, %s, %s, %s, %s);""",
+        self.cursor.execute("""INSERT INTO """ + self.config['database']['schema'] + """.bitfinex VALUES(%s, %s, %s, %s, %s, %s, %s, %s);""",
                             [mid, bid, ask, last, low, high, volume, timestamp])
 
     def getSampleData(self):
-        self.cursor.execute("""SELECT last_price, timestamp FROM bitcoin.bitfinex""")
+        self.cursor.execute("""SELECT last_price, timestamp FROM """ + self.config['database']['schema'] + """.bitfinex""")
         results = []
         for record in self.cursor:
             results.append([record[0], record[1]])
         return results
-
