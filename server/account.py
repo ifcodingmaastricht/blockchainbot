@@ -13,18 +13,20 @@ class Account:
         self.balanceBitcoins = 0.0
         self.balanceFiat = 0.0
         self.password = ''
-        if self.fetch():
-            self.__copyRowToVariables(self.row)
+        self.fetch()
 
     def fetch(self):
         cursor = self.db.connection.cursor()
         cursor.execute("SELECT id, balance_bitcoins, balance_fiat, password FROM accounts WHERE id = %s", [self.accountId])
         row = cursor.fetchone()
-        self.__copyRowToVariables(row)
+        if row:
+            self.__copyRowToVariables(row)
         return row
 
     def exists(self):
-        return None != self.fetch(self)
+        cursor = self.db.connection.cursor()
+        cursor.execute("SELECT id, balance_bitcoins, balance_fiat, password FROM accounts WHERE id = %s", [self.accountId])
+        return None != cursor.fetchone()
 
     def create(self):
         if not self.exists():
@@ -32,7 +34,7 @@ class Account:
             cursor.execute("INSERT INTO accounts (balance_bitcoins, balance_fiat, password) VALUES (%s, %s, %s) RETURNING id", [self.balanceBitcoins, self.balanceFiat, self.password])
             self.accountId = cursor.fetchone()[0]
 
-    def update():
+    def update(self):
         if self.exists():
             cursor = self.db.connection.cursor()
             cursor.execute("UPDATE accounts SET balance_bitcoins = %s, balance_fiat = %s, password = %s WHERE id = %s", [self.balanceBitcoins, self.balanceFiat, self.password, self.accountId])
