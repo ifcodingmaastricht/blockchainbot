@@ -1,5 +1,9 @@
 from flask import Flask, jsonify
 from exchange import Exchange
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
+
+
 app = Flask('Fake Exchange Server')
 exchange = Exchange()
 
