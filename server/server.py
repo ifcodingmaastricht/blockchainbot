@@ -20,9 +20,9 @@ def get_balance():
     )
 
 
-@app.route('/buy')
-def buy():
-    status = exchange.buy_bit_coin()
+@app.route('/buy/<float:bitcoinamount>')
+def buy(bitcoinamount):
+    status = exchange.buy_bit_coin(bitcoinamount)
     return "{}".format(status)
 
 

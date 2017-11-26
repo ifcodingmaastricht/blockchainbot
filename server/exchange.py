@@ -17,12 +17,12 @@ class Exchange:
             self.bit_coin_current_price = float(json.loads(html)['last_price'])
         return self.bit_coin_current_price
 
-    def buy_bit_coin(self):
+    def buy_bit_coin(self, bitcoinamount):
         if self.cash > (self.bit_coin_current_price + self.calculate_transaction_fee()):
-            self.bit_coin = self.bit_coin + 1
-            self.cash -= self.bit_coin_current_price
+            self.bit_coin = self.bit_coin + bitcoinamount
+            self.cash -= self.bit_coin_current_price*bitcoinamount
             self.cash -= self.calculate_transaction_fee()
-            return True
+            return 'You bought the following amount of bitcoin: ' + str(bitcoinamount) 
 
     def sell_bit_coin(self):
         if self.bit_coin > 0:
