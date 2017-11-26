@@ -10,8 +10,12 @@ Project to simulate bitcoin buying and selling
 
 # packages used
 
-pip install pyyaml
-pip install psycopg2
+* pip install pyyaml
+* pip install psycopg2
+
+Install everything in one go with:
+
+`pip3 install -r requirements.txt`
 
 # Setup postgres on macOs
 
@@ -19,11 +23,9 @@ pip install psycopg2
 * brew install postgres
 * pg_ctl -D /usr/local/var/postgres start
 
-# Installing all requirements:
-
-* `pip3 install -r requirements.txt`
-
 # Running things
+
+TODO: initialize virtualenv
 
 * simulator: `python3 -m simulator.py`
 * server: `python3 -m server.server`
