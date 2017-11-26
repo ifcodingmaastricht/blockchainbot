@@ -1,5 +1,5 @@
 from flask import Flask, jsonify
-from .exchange import Exchange
+from exchange import Exchange
 app = Flask('Fake Exchange Server')
 exchange = Exchange()
 
