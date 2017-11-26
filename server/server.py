@@ -3,7 +3,6 @@ from exchange import Exchange
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
-
 app = Flask('Fake Exchange Server')
 exchange = Exchange()
 
@@ -30,9 +29,9 @@ def buy(bitcoinamount):
     return "{}".format(status)
 
 
-@app.route('/sell')
-def sell():
-    status = exchange.sell_bit_coin()
+@app.route('/sell/<float:bitcoinamount>')
+def sell(bitcoinamount):
+    status = exchange.sell_bit_coin(bitcoinamount)
     return "{}".format(status)
 
 

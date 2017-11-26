@@ -18,20 +18,25 @@ class Exchange:
         return self.bit_coin_current_price
 
     def buy_bit_coin(self, bitcoinamount):
-        if self.cash > (self.bit_coin_current_price + self.calculate_transaction_fee()):
+        if self.cash > (self.bit_coin_current_price * bitcoinamount + self.calculate_transaction_fee(bitcoinamount)):
             self.bit_coin = self.bit_coin + bitcoinamount
             self.cash -= self.bit_coin_current_price*bitcoinamount
-            self.cash -= self.calculate_transaction_fee()
-            return 'You bought the following amount of bitcoin: ' + str(bitcoinamount) 
+            self.cash -= self.calculate_transaction_fee(bitcoinamount)
+            return 'You bought the following amount of bitcoin: %s for %s €' %(str(bitcoinamount), str(self.bit_coin_current_price*bitcoinamount))
+        else:
+            return "Can't spend money you don't have, friend"
 
-    def sell_bit_coin(self):
-        if self.bit_coin > 0:
-            self.bit_coin = self.bit_coin - 1
-            self.cash += self.bit_coin_current_price
-            self.cash -= self.calculate_transaction_fee()
+    def sell_bit_coin(self, bitcoinamount):
+        if self.bit_coin >= bitcoinamount:
+            self.bit_coin = self.bit_coin - bitcoinamount
+            self.cash += self.bit_coin_current_price * bitcoinamount
+            self.cash -= self.calculate_transaction_fee(bitcoinamount)
+            return 'You sold the following amount of bitcoin: %s for %s €' %(str(bitcoinamount), str(self.bit_coin_current_price*bitcoinamount))
+        else:
+            return 'Fancy having that many coins...'
 
     def get_balance(self):
         return self.cash + (self.bit_coin * self.bit_coin_current_price)
 
-    def calculate_transaction_fee(self):
-        return self.transaction_fee * self.bit_coin_current_price
+    def calculate_transaction_fee(self,bitcoinamount):
+        return self.transaction_fee * self.bit_coin_current_price*bitcoinamount
