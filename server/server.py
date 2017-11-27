@@ -1,7 +1,8 @@
-from flask import Flask, jsonify
-from exchange import Exchange
+from flask import Flask, jsonify, Blueprint
+import exchange
 app = Flask('Fake Exchange Server')
-exchange = Exchange()
+exchange = exchange.Exchange()
+
 
 
 @app.route('/price')
