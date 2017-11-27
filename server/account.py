@@ -1,6 +1,6 @@
-import yaml
+import config
 
-config = yaml.safe_load(open("config.yml"))
+config = config.load()
 
 class Account:
     COL_BALANCE_BITCOINS=1
@@ -33,11 +33,16 @@ class Account:
             cursor = self.db.connection.cursor()
             cursor.execute("INSERT INTO accounts (balance_bitcoins, balance_fiat, password) VALUES (%s, %s, %s) RETURNING id", [self.balanceBitcoins, self.balanceFiat, self.password])
             self.accountId = cursor.fetchone()[0]
+            return self.accountId
 
     def update(self):
         if self.exists():
             cursor = self.db.connection.cursor()
             cursor.execute("UPDATE accounts SET balance_bitcoins = %s, balance_fiat = %s, password = %s WHERE id = %s", [self.balanceBitcoins, self.balanceFiat, self.password, self.accountId])
+
+    def destroy(self):
+        cursor = self.db.connection.cursor()
+        cursor.execute("DELETE FROM accounts WHERE id = %s", [self.accountId])
 
     def __copyRowToVariables(self, row):
         self.balanceBitcoins = float(row[self.COL_BALANCE_BITCOINS])
