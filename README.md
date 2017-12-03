@@ -25,8 +25,6 @@ Install everything in one go with:
 
 # Running things
 
-TODO: initialize virtualenv
-
 * simulator: `python3 -m simulator.py`
-* server: `python3 -m server.server`
+* server: `python3 -m server.run`
 * test accounts: `python3 -m test.account`
