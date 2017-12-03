@@ -1,4 +1,9 @@
 database:
+    schema: bitcoin
+    database: database1
     username: username1
     password: password1
     host: localhost
+
+simulator:
+    seconds_between_refresh: 300
