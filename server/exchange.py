@@ -1,6 +1,6 @@
 import json
 import urllib.request
-import database
+from database.database import Database
 
 class Exchange:
     cash = 100000
