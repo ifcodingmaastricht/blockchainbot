@@ -1,6 +1,6 @@
 import json
 import urllib.request
-
+from database.database import Database
 
 class Exchange:
     cash = 100000
@@ -9,6 +9,7 @@ class Exchange:
     transaction_fee = 0.002
 
     def __init__(self):
+        self.db = Database()
         self.bit_coin_current_price = self.get_last_sell_price()
 
     def get_last_sell_price(self):
@@ -35,7 +36,7 @@ class Exchange:
         else:
             return 'Fancy having that many coins...'
 
-    def get_balance(self):
+    def get_balance(self, account_id):
         return self.cash + (self.bit_coin * self.bit_coin_current_price)
 
     def calculate_transaction_fee(self,bitcoinamount):

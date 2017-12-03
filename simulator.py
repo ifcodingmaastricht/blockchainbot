@@ -1,9 +1,11 @@
-
+import yaml
 import json
 import urllib.request
 import time
 from wallet import Wallet
-from database import Database
+from database.database import Database
+
+config = yaml.safe_load(open("config.yml"))
 
 db = Database()
 db.connect()
@@ -43,10 +45,10 @@ totalNetWorthStart = getTotalNetWorth()
 
 
 while True:
-    var = urllib.request.urlopen('https://api.bitfinex.com/v1/pubticker/btcusd') 
+    var = urllib.request.urlopen('https://api.bitfinex.com/v1/pubticker/btcusd')
     html = var.read()
     bitfinexBtcusd = (json.loads(html))
-    
+
     db.store(bitfinexBtcusd ['mid'], bitfinexBtcusd ['bid'],bitfinexBtcusd ['ask'], bitfinexBtcusd ['last_price'],
         bitfinexBtcusd ['low'], bitfinexBtcusd ['high'], bitfinexBtcusd ['volume'], bitfinexBtcusd ['timestamp'])
 
@@ -63,7 +65,7 @@ while True:
         cash_wallet.give(currentPrice)
         cash_wallet.give(getTransectionfee())
     showTotalNetWorth()
-    
+
     oldPrice = currentPrice
- 
-    time.sleep(300)
+
+    time.sleep(config['simulator']['seconds_between_refresh'])
