@@ -8,6 +8,15 @@ Project to simulate bitcoin buying and selling
 * Copy config_example.yml to config.yml
 * Run simulator.py
 
+# Virtualenv
+
+* `python3 -m venv venv`
+* `source venv/bin/activate`
+
+to deactivate, run
+
+* `deactivate`
+
 # packages used
 
 * pip install pyyaml
@@ -26,5 +35,5 @@ Install everything in one go with:
 # Running things
 
 * simulator: `python3 -m simulator.py`
-* server: `python3 -m server.run`
-* test accounts: `python3 -m test.account`
+* flask server: `python3 -m server`
+* unit tests: `python3 -m unittest`
