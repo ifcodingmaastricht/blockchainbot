@@ -32,8 +32,13 @@ Install everything in one go with:
 * brew install postgres
 * pg_ctl -D /usr/local/var/postgres start
 
+# Before running things
+
+* `cp config_example.yml config.yml`
+
 # Running things
 
-* simulator: `python3 -m simulator.py`
+* simulator_online: `python3 simulator.py`
+* simulator_offline: `python3 simulator_offline.py`
 * flask server: `python3 -m server`
 * unit tests: `python3 -m unittest`
