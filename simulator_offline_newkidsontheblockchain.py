@@ -63,12 +63,16 @@ dataset.pop(0)
 results = []
 
 smallestWindow = 2
-biggestWindow = len(dataset)
+biggestWindow = 1000
 
 for windowSize in range(smallestWindow,biggestWindow):
     window = []
     for i in range(0, windowSize):
         window.append(0.0)
+
+    # reset the bloody wallet
+    walletBitcoin = 0.0
+    cash_wallet = Wallet()
 
     currentIteration = 0
     oldAverage = 0
