@@ -53,27 +53,31 @@ def sell(prices):
 
 min_price = 100000
 max_price = 0
+number_of_buys = 0
+number_of_sells = 0
+
 
 # Now iterate over all consequitive datapoints
 for currentPrice in dataset:
-    print ('old;',oldPrice,'currentPrice;',currentPrice,'min',min_price,'max',max_price)
     recent_prices.append(currentPrice)
 
     min_price = min(min_price, currentPrice)
     max_price = max(max_price, currentPrice)
 
 
-    # nets 11281.58
+    # nets 10621.42
     #
     if len(recent_prices) > steps-1:
         if sell(recent_prices) and walletBitcoin > 0:
-            print ("sell")
             if last_buy + getTransectionfee() > currentPrice:
+                print("sell")
+                number_of_sells += 1
                 walletBitcoin = walletBitcoin - 1
                 cash_wallet.collect(currentPrice)
                 cash_wallet.give(getTransectionfee())
-        elif cash_wallet.cash > 0:
+        elif cash_wallet.cash > currentPrice:
             print ("buy")
+            number_of_buys += 1
             walletBitcoin = walletBitcoin + 1
             cash_wallet.give(currentPrice)
             cash_wallet.give(getTransectionfee())
@@ -93,7 +97,10 @@ for currentPrice in dataset:
     #     cash_wallet.collect(currentPrice * walletBitcoin)
     #     cash_wallet.give(getTransectionfee())
 
-    showTotalNetWorth()
     if len(recent_prices) > steps:
             recent_prices.pop(0)
     oldPrice = currentPrice
+
+print('buys:', number_of_buys)
+print('sells:', number_of_sells)
+showTotalNetWorth()
